@@ -7,10 +7,15 @@
  */ 
 
 #include <avr/io.h>
-#include "isp.h"
+#include <usart.h>
+#include <spi.h>
 
 int main(void)
 {
-		initIsp();
+		initUsart();
+		while(1)
+		{
+			writeUsart(readUsart());
+		}
 }
 

@@ -9,8 +9,6 @@
 #ifndef USART_H_
 #define USART_H_
 
-#include "global.h"
-
 void initUsart();
 void writeUsart(uint8_t data);
 uint8_t readUsart();

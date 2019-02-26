@@ -6,14 +6,15 @@
  *  Author: varunmohan
  */ 
 
-#include "usart.h"
+#include "global.h"
 #include <math.h>
 #include <avr/io.h>
+#include "usart.h"
 
 void initUsart()
  {
 	uint16_t ubrr;
-	ubrr=(uint16_t)floor(((uint32_t)CPU_HZ/((uint32_t)16*(uint32_t)BAUD))-(uint32_t)1); // ubrr=[(F_CPU/(16*BAUD))-1]
+	ubrr=(uint16_t)floor(((uint32_t)F_CPU/((uint32_t)16*(uint32_t)BAUD))-(uint32_t)1); // ubrr=[(F_CPU/(16*BAUD))-1]
 	UBRR0L = ubrr;
 	UBRR0H = (ubrr>>8);
 	UCSR0C = ((1<<UCSZ00)|(1<<UCSZ01));

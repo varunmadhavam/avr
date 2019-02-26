@@ -10,13 +10,8 @@
 #ifndef GLOBAL_H_
 #define GLOBAL_H_
 
-#define F_CPU 16000000UL
-#define CPU_HZ 16000000
-#define ATmega328p
-#define BAUD 19200
-#include <stdint.h>
-#include <avr/io.h>
-
-
+#define F_CPU 16000000
+#define BAUD 57600
+#define atmega328p
 
 #endif /* GLOBAL_H_ */

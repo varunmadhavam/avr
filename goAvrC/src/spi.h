@@ -8,9 +8,7 @@
 #ifndef SPI_H_
 #define SPI_H_
 
-#include "global.h"
-
-#ifdef ATmega328p
+#ifdef atmega328p
 	#define SPI_PORT 	PORTB
 	#define SPI_DDR 	DDRB
 	#define SCK_POS 	PB5

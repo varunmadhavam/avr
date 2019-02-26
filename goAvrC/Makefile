@@ -1,6 +1,6 @@
 MCU     = atmega328
 OUTPUT  = $(shell basename "`pwd`")
-AVRDUDE = /home/varun/exe/arduino/avrdude
+AVRDUDE = /home/varun/tools/arduino-1.8.8/hardware/tools/avr
 CC      = avr-gcc
 OBJCPY  = avr-objcopy
 CFLAGS  = -g -Os -I./src 
@@ -26,7 +26,7 @@ bin/$(OUTPUT).hex: $(OBJS)
 	$(OBJCPY) -j .text -j .data -O ihex $(TMP)/$(OUTPUT).elf bin/$(OUTPUT).hex
 
 upload : $(BIN)/$(OUTPUT).hex
-	$(AVRDUDE)/avrdude -C$(AVRDUDE)/avrdude.conf -v -patmega328p -carduino -P/dev/ttyACM0 -b115200 -D -Uflash:w:$(BIN)/$(OUTPUT).hex:i
+	$(AVRDUDE)/bin/avrdude -C$(AVRDUDE)/etc/avrdude.conf -v -patmega328p -carduino -P/dev/ttyACM0 -b115200 -D -Uflash:w:$(BIN)/$(OUTPUT).hex:i
 
 clean:
 	rm -f bin/* tmp/*

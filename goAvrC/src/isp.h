@@ -9,7 +9,7 @@
 #define ISP_H_
 
 #include "global.h"
-#ifdef ATmega328p
+#ifdef atmega328p
 	#define RESET PB1
 	#define DIR_RST DDRB
 	#define PORT_RST PORTB
