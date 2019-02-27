@@ -8,26 +8,12 @@
 #include <util/delay.h>
 #include <avr/io.h>
 #include <stdint.h>
-#include "isp.h"
 #include "usart.h"
 #include "spi.h"
-
-
-void enableProgramming();
-void disableProgramming();
-void readSignature();
-void chip_erase();
-void read_fuse();
-void read_lock();
-void read_flash();
-void read_eeprom();
-//void spi_transaction(uint8_t a,uint8_t b,uint8_t c,uint8_t d,int pos);
-uint8_t spi_transaction(uint8_t a,uint8_t b,uint8_t c,uint8_t d,int pos);
+#include "isp.h"
 
 void initIsp()
 {
-	initUsart();
-	initSpi();
 	uint8_t in;
 	while(1)
 	{
@@ -75,19 +61,17 @@ uint8_t spi_transaction(uint8_t a,uint8_t b,uint8_t c,uint8_t d,int pos)
 
 void enableProgramming()
 {
-	DIR_RST|=(1<<RESET);
-	SPI_PORT|=(0<<SCK_POS);
+	DIR_RST		|=	(1<<RESET);
+	PORT_RST	|=	(1<<RESET);
+	SPI_PORT	&=	~(1<<SCK_POS);
 	_delay_ms(20);
-	PORT_RST=(1<<RESET);
-	_delay_ms(100);
-	PORT_RST=(0<<RESET);
-	_delay_ms(20);
+	PORT_RST	&=~(1<<RESET);
 	spi_transaction(0xAC,0x53,0x00,0x00,3);
 }
 
 void disableProgramming()
 {
-	PORT_RST=(1<<RESET);
+	PORT_RST|=(1<<RESET);
 	writeUsart(0x92);
 }
 

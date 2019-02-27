@@ -9,10 +9,10 @@
 #ifndef USART_H_
 #define USART_H_
 
+#include <stdint.h>
+
 void initUsart();
 void writeUsart(uint8_t data);
 uint8_t readUsart();
-
-
 
 #endif /* USART_H_ */

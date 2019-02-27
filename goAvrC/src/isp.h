@@ -8,15 +8,19 @@
 #ifndef ISP_H_
 #define ISP_H_
 
-#include "global.h"
-#ifdef atmega328p
-	#define RESET PB1
-	#define DIR_RST DDRB
-	#define PORT_RST PORTB
-#endif
+#define RESET SS_POS
+#define DIR_RST SPI_DDR
+#define PORT_RST SPI_PORT
 
-void initIsp();
-
+void enableProgramming();
+void disableProgramming();
+void readSignature();
+void chip_erase();
+void read_fuse();
+void read_lock();
+void read_flash();
+void read_eeprom();
+uint8_t spi_transaction(uint8_t a,uint8_t b,uint8_t c,uint8_t d,int pos);
 
 
 

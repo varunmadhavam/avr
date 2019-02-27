@@ -14,9 +14,12 @@
 
 void initSpi()
 {
-	SPI_DDR|=((1<<MOSI_POS)|(1<<SCK_POS)|(1<<SS_POS));
-	SPI_PORT|=(1<<SS_POS);
-	SPCR|=(1<<SPE)|(1<<MSTR)|(1<<SPR0)|(1<<SPR1)|(1<<DORD)|(1<<CPOL)|(1<<CPHA);
+	SPI_DDR|=((1<<MOSI_POS)|(1<<SCK_POS));//|(1<<SS_POS));
+	SPCR|=((1<<SPE)|(1<<MSTR)|(1<<SPR0)|(1<<SPR1));
+	SPCR&=(~(1<<CPOL));
+	SPCR&=(~(1<<CPHA));
+	SPCR&=(~(1<<DORD));
+
 }
 
 void closeSpi()

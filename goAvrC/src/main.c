@@ -13,9 +13,12 @@
 int main(void)
 {
 		initUsart();
-		while(1)
+		initSpi();
+		initIsp();
+		/*while(1)
 		{
-			writeUsart(readUsart());
-		}
+			writeUsart(writeSpi(readUsart()));
+		}*/
+		
 }
 

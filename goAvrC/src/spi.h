@@ -16,6 +16,7 @@
 	#define MOSI_POS	PB3
 	#define SS_POS		PB2
 #endif
+#include <stdint.h>
 
 void initSpi();
 void closeSpi();
