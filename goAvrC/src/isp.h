@@ -12,6 +12,12 @@
 #define DIR_RST SPI_DDR
 #define PORT_RST SPI_PORT
 
+#define ERROR_DEVICE_NOT_IN_SYNC 0x01
+#define SUCCESSFULLY_ENTERD_PROGRAMMING_MODE 0x02
+#define ERROR_CODE 0xEE
+#define SUCCESS_CODE 0x00
+
+void initIsp();
 void enableProgramming();
 void disableProgramming();
 void readSignature();
@@ -21,6 +27,7 @@ void read_lock();
 void read_flash();
 void read_eeprom();
 uint8_t spi_transaction(uint8_t a,uint8_t b,uint8_t c,uint8_t d,int pos);
+void spi_transaction_z(uint8_t a,uint8_t b,uint8_t c,uint8_t d);
 
 
 

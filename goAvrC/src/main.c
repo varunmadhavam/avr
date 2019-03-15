@@ -6,9 +6,9 @@
  * *
  */ 
 
-#include <avr/io.h>
-#include <usart.h>
-#include <spi.h>
+#include "usart.h"
+#include "spi.h"
+#include "isp.h"
 
 int main(void)
 {
