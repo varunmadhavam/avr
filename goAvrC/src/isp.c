@@ -41,6 +41,9 @@ void initIsp()
 			case 0x97:
 					read_flash();
 					break;
+			case 0x98:
+					write_flash();
+					break;
 		
 		};
 	}
@@ -99,7 +102,8 @@ void enableProgramming()
 void disableProgramming()
 {
 	PORT_RST|=(1<<RESET);
-	writeUsart(0x92);
+	writeUsart(SUCCESS_CODE);
+	writeUsart(SUCCESSFULLY_LEFT_PROGRAMMING_MODE);
 }
 
 void readSignature()
@@ -143,7 +147,7 @@ void read_flash()
 	uint16_t countmem=0;
 	a=readUsart();
 	b=readUsart();
-	uint32_t mem_size=(a<<8)|b;
+	uint16_t mem_size=(a<<8)|b;
 	while(countmem<mem_size)
 	{
 		temp=spi_transaction(0x28,(uint8_t)(countmem>>8),(uint8_t)(countmem&0xff),0x00,4);
@@ -158,36 +162,53 @@ void read_flash()
 
 void write_flash()
 {
-	uint32_t bytecount;
-	uint8_t wordsize_flash;
-	uint8_t wordsize;
-	uint16_t address;
-	/*for(i=0;i<bytecount;i+=2)
+	uint16_t bytecount,address,i,wordaddr;
+	uint8_t wordsize_flash,wordsize,Twd_flash,tempa,tempb;
+	wordaddr=0x00;
+	wordsize=0x00;
+	wordsize_flash=readUsart();
+	Twd_flash=readUsart();
+	tempa=readUsart();
+	tempb=readUsart();
+	address=(tempa<<8)|tempb;
+	tempa=readUsart();
+	tempb=readUsart();
+	bytecount=(tempa<<8)|tempb;;
+
+	for(i=0;i<bytecount;i+=2)
     	{
-           load_memory_page(wordadd,data[i],data[i+1]);
-            System.out.println("Load Memory @ "+support.bytesToHex(wordadd)+
-                        " with low byte : "+support.bytesToHex(data[i])+" and high byte : "
-                        +support.bytesToHex(data[i+1]));
+			tempa=readUsart();
+			tempb=readUsart();
+            load_memory_page(wordaddr,tempa,tempb);
             wordsize=wordsize+1;
-            wordadd=(byte)(wordadd+0x01);
+            wordaddr+=1;
             if(wordsize==wordsize_flash)
             	{
-                    write_memory_page(support.shorttobytes(pageadd));
-                    System.out.println("Write page at adress : "+support.bytesToHex(support.shorttobytes(pageadd)));
-                    pageadd=(short)(pageadd+wordsize_flash);
-                    wordadd=0x00;
+                    write_memory_page((uint8_t)(address>>8),(uint8_t)(address&0xff));
+                    address+=wordsize_flash;
+                    wordaddr=0x00;
                     wordsize=0;
-                    support.sleep(20);
+                    my_delay_ms(Twd_flash);
                 }
         }
     if(wordsize<wordsize_flash)
         {
-            write_memory_page(support.shorttobytes(pageadd));
-            System.out.println("Write page at adress : "+support.bytesToHex(support.shorttobytes(pageadd)));
-        }*/
+            write_memory_page((uint8_t)(address>>8),(uint8_t)(address&0xff));
+        }
+	writeUsart(SUCCESS_CODE);
+	writeUsart(0x00);
 }
 
 void read_eeprom()
 {
 	
+}
+
+void my_delay_ms(int ms)
+{
+  while (0 < ms)
+  {  
+    _delay_ms(1);
+    --ms;
+  }
 }

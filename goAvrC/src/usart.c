@@ -18,7 +18,7 @@ void initUsart()
 	UBRR0L = ubrr;
 	UBRR0H = (ubrr>>8);
 	UCSR0C = ((1<<UCSZ00)|(1<<UCSZ01));
-	UCSR0B=(1<<RXEN0)|(1<<TXEN0);	 
+	UCSR0B = (1<<RXEN0)|(1<<TXEN0);	 
  }
  
 uint8_t readUsart()

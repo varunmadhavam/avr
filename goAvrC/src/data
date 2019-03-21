@@ -1,0 +1,24 @@
+Flash Size Page Size PCWORD No. of Pages PCPAGE PCMSB
+4K words (8 Kbytes) 32 words PC[4:0] 128 PC[11:5] 11
+
+EEPROM Size Page Size PCWORD No. of Pages PCPAGE EEAMSB
+512 bytes 4 bytes EEA[1:0] 128 EEA[8:2] 8
+
+avr is little endian.
+    the question-> its always what is stored first.
+    little endian->LSB or the byte containing the LSb is stored first.
+    big endian->MSB or the byte containing the MSb is stored first.
+    by stored first means it has the lowest memory address among the bytes of the multibyte data.
+
+
+
+
+programming 
+enable programming -> 0x91 -> 0x00,0x00
+write flash -> 0x98
+wordsize_flash -> 1B
+Twd_flash -> 1B
+start address high -> 1B
+start address low -> 1B
+byte count high -> 1B
+byte count low -> 1B

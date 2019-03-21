@@ -15,10 +15,5 @@ int main(void)
 		initUsart();
 		initSpi();
 		initIsp();
-		/*while(1)
-		{
-			writeUsart(writeSpi(readUsart()));
-		}*/
-		
 }
 
