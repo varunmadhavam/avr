@@ -165,7 +165,7 @@ void write_flash()
 	uint16_t bytecount,address,i,wordaddr;
 	uint8_t wordsize_flash,wordsize,Twd_flash,tempa,tempb;
 	wordaddr=0x00;
-	wordsize=0x00;
+	wordsize=0;
 	wordsize_flash=readUsart();
 	Twd_flash=readUsart();
 	tempa=readUsart();
@@ -173,30 +173,29 @@ void write_flash()
 	address=(tempa<<8)|tempb;
 	tempa=readUsart();
 	tempb=readUsart();
-	bytecount=(tempa<<8)|tempb;;
-
+	bytecount=(tempa<<8)|tempb;
 	for(i=0;i<bytecount;i+=2)
     	{
-			tempa=readUsart();
-			tempb=readUsart();
-            load_memory_page(wordaddr,tempa,tempb);
-            wordsize=wordsize+1;
-            wordaddr+=1;
-            if(wordsize==wordsize_flash)
-            	{
-                    write_memory_page((uint8_t)(address>>8),(uint8_t)(address&0xff));
-                    address+=wordsize_flash;
-                    wordaddr=0x00;
-                    wordsize=0;
-                    my_delay_ms(Twd_flash);
-                }
+				tempa=readUsart();
+				tempb=readUsart();
+        load_memory_page(wordaddr,tempa,tempb);
+        wordsize=wordsize+1;
+        wordaddr+=1;
+        if(wordsize==wordsize_flash)
+          {
+            write_memory_page((uint8_t)(address>>8),(uint8_t)(address&0xff));
+            address+=wordsize_flash;
+            wordaddr=0x00;
+            wordsize=0;
+            my_delay_ms(Twd_flash);
+						writeUsart(0x80);
+          }
         }
     if(wordsize<wordsize_flash)
         {
             write_memory_page((uint8_t)(address>>8),(uint8_t)(address&0xff));
+						writeUsart(0x88);
         }
-	writeUsart(SUCCESS_CODE);
-	writeUsart(0x00);
 }
 
 void read_eeprom()

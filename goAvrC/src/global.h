@@ -11,7 +11,7 @@
 #define GLOBAL_H_
 
 #define F_CPU 16000000
-#define BAUD 57600
+#define BAUD 9600
 #define atmega328p
 
 #endif /* GLOBAL_H_ */
